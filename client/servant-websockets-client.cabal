@@ -1,0 +1,45 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 69c3bdfdee1ab6940462e94c2182908be9e3ae76d40f215865b4de8b8ccedfdd
+
+name:           servant-websockets-client
+version:        0.0.0.1
+synopsis:       Client library for using websockets with servant
+description:    Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+category:       Web
+homepage:       https://github.com/simspace/servant-websockets#readme
+bug-reports:    https://github.com/simspace/servant-websockets/issues
+author:         Cary Robbins
+maintainer:     carymrobbins@gmail.com
+copyright:      2019 SimSpace
+license:        BSD3
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/simspace/servant-websockets
+
+library
+  exposed-modules:
+      Servant.Client.WebSockets
+  other-modules:
+      Paths_servant_websockets_client
+  hs-source-dirs:
+      src
+  default-extensions: FlexibleContexts FlexibleInstances MultiParamTypeClasses RankNTypes RankNTypes ScopedTypeVariables TypeApplications TypeFamilies UndecidableInstances
+  ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2 -eventlog
+  build-depends:
+      base
+    , binary
+    , bytestring
+    , mtl
+    , network
+    , servant-client
+    , servant-client-core
+    , servant-websockets-core
+    , websockets
+  default-language: Haskell2010

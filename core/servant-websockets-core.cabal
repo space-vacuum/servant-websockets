@@ -1,0 +1,36 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 015f6fee977137ec8df2500bc0e609709dec2808d7eec621dccf91636a672894
+
+name:           servant-websockets-core
+version:        0.0.0.1
+synopsis:       Core library for using websockets with servant
+description:    Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+category:       Web
+homepage:       https://github.com/simspace/servant-websockets#readme
+bug-reports:    https://github.com/simspace/servant-websockets/issues
+author:         Cary Robbins
+maintainer:     carymrobbins@gmail.com
+copyright:      2019 SimSpace
+license:        BSD3
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/simspace/servant-websockets
+
+library
+  exposed-modules:
+      Servant.API.WebSockets
+  other-modules:
+      Paths_servant_websockets_core
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2 -eventlog
+  build-depends:
+      base
+  default-language: Haskell2010

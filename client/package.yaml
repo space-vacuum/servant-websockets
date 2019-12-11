@@ -1,0 +1,47 @@
+# GENERATED HEADER START
+name:                servant-websockets-client
+version:             0.0.0.1
+github:              "simspace/servant-websockets"
+license:             BSD3
+author:              "Cary Robbins"
+maintainer:          "carymrobbins@gmail.com"
+copyright:           "2019 SimSpace"
+# GENERATED HEADER END
+
+synopsis:            Client library for using websockets with servant
+
+category:            Web
+
+description:         Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+
+default-extensions:
+- FlexibleContexts
+- FlexibleInstances
+- MultiParamTypeClasses
+- RankNTypes
+- RankNTypes
+- ScopedTypeVariables
+- TypeApplications
+- TypeFamilies
+- UndecidableInstances
+
+dependencies:
+- base
+- binary
+- bytestring
+- mtl
+- network
+- servant-client
+- servant-client-core
+- servant-websockets-core
+- websockets
+
+library:
+  source-dirs: src
+  ghc-options:
+  - -Wall
+  - -Werror
+  - -fwarn-tabs
+  - -Wincomplete-uni-patterns
+  - -O2
+  - -eventlog

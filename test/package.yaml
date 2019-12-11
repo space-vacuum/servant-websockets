@@ -1,0 +1,55 @@
+# GENERATED HEADER START
+name:                servant-websockets-test
+version:             0.0.0.1
+github:              "simspace/servant-websockets"
+license:             BSD3
+author:              "Cary Robbins"
+maintainer:          "carymrobbins@gmail.com"
+copyright:           "2019 SimSpace"
+# GENERATED HEADER END
+
+synopsis:            Server library for using websockets with servant
+
+category:            Web
+
+description:         Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+
+default-extensions:
+- DataKinds
+- DeriveGeneric
+- DerivingStrategies
+- NamedFieldPuns
+- OverloadedStrings
+- ScopedTypeVariables
+- TypeApplications
+- TypeOperators
+
+dependencies:
+- base
+- hspec
+- http-client
+- servant
+- servant-client
+- servant-client-core
+- servant-server
+- servant-websockets-client
+- servant-websockets-core
+- servant-websockets-server
+- text
+- warp
+- websockets
+
+tests:
+  servant-websockets-tests:
+    main: Main.hs
+    ghc-options:
+    - -Wall
+    - -Werror
+    - -fwarn-tabs
+    - -O2
+    - -threaded
+    - -rtsopts
+    - '"-with-rtsopts=-N -T"'
+    - -eventlog
+    source-dirs:
+    - test
