@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1db1177eb607f6257714cf508162d2a76114dec005f0e7f1ec29e5322752a859
+-- hash: 9eea8b1c12a4cb648d32d4b40b938129599f4e2b479c1137bafc8f1c760fb630
 
 name:           servant-websockets-test
 version:        0.0.0.1
@@ -31,10 +31,11 @@ test-suite servant-websockets-tests
       Paths_servant_websockets_test
   hs-source-dirs:
       test
-  default-extensions: DataKinds DeriveGeneric DerivingStrategies NamedFieldPuns OverloadedStrings ScopedTypeVariables TypeApplications TypeOperators
-  ghc-options: -Wall -Werror -fwarn-tabs -O2 -threaded -rtsopts "-with-rtsopts=-N -T" -eventlog
+  default-extensions: DataKinds DeriveGeneric DerivingStrategies LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables TypeApplications TypeOperators
+  ghc-options: -Wall -fwarn-tabs -O0 -threaded -rtsopts "-with-rtsopts=-N -T" -eventlog
   build-depends:
-      base
+      async
+    , base
     , hspec
     , http-client
     , servant

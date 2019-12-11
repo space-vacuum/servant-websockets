@@ -4,20 +4,24 @@ import Control.Monad
 import Data.Proxy
 import Servant.API
 import Servant.API.Generic
-import Servant.API.WebSockets
 import Servant.Client
 import Servant.Client.Generic
-import Servant.Client.WebSockets ()
 import Servant.Server
 import Servant.Server.Generic
-import Servant.Server.WebSockets ()
 import Test.Hspec
 
-import Control.Concurrent (MVar, modifyMVar_, newMVar, readMVar)
+import Control.Concurrent
+  ( MVar, forkIO, modifyMVar_, newEmptyMVar, newMVar, putMVar, readMVar, takeMVar
+  , threadDelay
+  )
+import Control.Concurrent.Async (race)
 import Control.Exception (finally, throwIO)
 import Control.Monad.IO.Class (liftIO)
 import Data.Char (isPunctuation, isSpace)
 import Data.Text (Text)
+import Servant.API.WebSockets (WebSocketApp)
+import Servant.Client.WebSockets ()
+import Servant.Server.WebSockets ()
 import System.IO.Unsafe (unsafePerformIO)
 
 import qualified Data.Text as Text
@@ -29,22 +33,51 @@ spec :: Spec
 spec = do
   describe "MyAPI" $ do
     it "should work" $ withTestClient $ \myClient -> do
-      let runTim = foo myClient "Tim" $ \conn -> do
-            WS.receiveData @Text conn `shouldReturn` "Welcome! Users: Jan"
-            WS.sendTextData @Text conn "Yo"
-            WS.receiveData @Text conn `shouldReturn` "Tim: Yo"
+      jan <- newUser
+      void $ forkIO $ foo myClient "Jan" $ wsIO jan
+      receive jan `shouldReturn` "Welcome!"
+      send jan "Hi!"
+      receive jan `shouldReturn` "Jan: Hi!"
 
-      foo myClient "Jan" $ \conn -> do
-        WS.receiveData @Text conn `shouldReturn` "Welcome!"
-        WS.sendTextData @Text conn "Hi!"
-        WS.receiveData @Text conn `shouldReturn` "Jan: Hi!"
-        runTim
-        WS.receiveData @Text conn `shouldReturn` "Tim joined"
-        WS.receiveData @Text conn `shouldReturn` "Tim: Yo"
-        -- TODO: This fails with a ConnectionException (ConnectionClosed)
-        -- Probably need to fork these into threads and write to them
-        -- with TChan or something.
-        WS.receiveData @Text conn `shouldReturn` "Tim disconnected"
+      tim <- newUser
+      void $ forkIO $ foo myClient "Tim" $ wsIO tim
+
+      receive tim `shouldReturn` "Welcome! Users: Jan"
+      receive jan `shouldReturn` "Tim joined"
+
+      send tim "Yo"
+      receive tim `shouldReturn` "Tim: Yo"
+      receive jan `shouldReturn` "Tim: Yo"
+
+      kill tim
+      receive jan `shouldReturn` "Tim disconnected"
+      where
+      withTimeout :: (HasCallStack) => IO a -> IO a
+      withTimeout x = do
+        -- 10 seconds
+        race (threadDelay 10000000) x >>= \case
+          Left () -> error "Failed to complete within timeout"
+          Right a -> pure a
+
+      -- (connection var, die var)
+      newUser :: IO (MVar WS.Connection, MVar ())
+      newUser = (,) <$> newEmptyMVar @WS.Connection <*> newEmptyMVar @()
+
+      send :: (HasCallStack) => (MVar WS.Connection, MVar ()) -> Text -> IO ()
+      send (var, _) msg =
+        withTimeout $ readMVar var >>= flip WS.sendTextData msg
+
+      receive :: (HasCallStack) => (MVar WS.Connection, MVar ()) -> IO Text
+      receive (var, _) = withTimeout $ readMVar var >>= WS.receiveData
+
+      kill :: (HasCallStack) => (MVar WS.Connection, MVar ()) -> IO ()
+      kill (_, die) = withTimeout $ void $ putMVar die ()
+
+      wsIO :: (MVar WS.Connection, MVar ()) -> WS.Connection -> IO ()
+      wsIO (var, die) conn = do
+        putMVar var conn -- Set the connection var
+        takeMVar die -- Wait until the die var is set
+        void $ takeMVar var -- Unset the connection var
 
 type MyAPI = ToServantApi MyRoutes
 
@@ -98,7 +131,6 @@ mkMyServer state = MyRoutes { foo }
       message <- WS.receiveData conn
       broadcast $ user <> ": " <> message
 
-type Greeting = Text
 type User = Text
 type MyServerState = [(User, WS.Connection)]
 
