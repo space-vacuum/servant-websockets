@@ -1,5 +1,5 @@
 # GENERATED HEADER START
-name:                servant-websockets-test
+name:                servant-websockets-examples
 version:             0.0.0.1
 github:              "simspace/servant-websockets"
 license:             BSD3
@@ -8,7 +8,7 @@ maintainer:          "carymrobbins@gmail.com"
 copyright:           "2019 SimSpace"
 # GENERATED HEADER END
 
-synopsis:            Server library for using websockets with servant
+synopsis:            Example server and client for servant-websockets
 
 category:            Web
 
@@ -27,8 +27,6 @@ default-extensions:
 
 dependencies:
 - base
-- async
-- hspec
 - http-client
 - servant
 - servant-client
@@ -36,23 +34,28 @@ dependencies:
 - servant-server
 - servant-websockets-client
 - servant-websockets-core
-- servant-websockets-examples
 - servant-websockets-server
 - text
 - warp
 - websockets
 
-tests:
-  servant-websockets-tests:
-    main: Main.hs
+library:
+  ghc-options:
+  - -Wall
+  - -Werror
+  - -fwarn-tabs
+  - -O0
+  - -eventlog
+  source-dirs:
+  - src
+
+executables:
+  servant-websocket-example:
+    main:                Main.hs
+    source-dirs:         app
     ghc-options:
-    - -Wall
-    # TODO: - -Werror
-    - -fwarn-tabs
-    - -O0
     - -threaded
     - -rtsopts
-    - '"-with-rtsopts=-N -T"'
-    - -eventlog
-    source-dirs:
-    - test
+    - -with-rtsopts=-N
+    dependencies:
+    - servant-websockets-examples

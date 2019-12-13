@@ -4,11 +4,11 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f40f50927e2523566277eb0044c6f3e62f88f3c7f147a1c2eac705c3fa854e79
+-- hash: dcd92292b5eee8e933b22fad5dc99310f9e6b2871883bc9735ec0efd9bf1f95e
 
-name:           servant-websockets-test
+name:           servant-websockets-examples
 version:        0.0.0.1
-synopsis:       Server library for using websockets with servant
+synopsis:       Example server and client for servant-websockets
 description:    Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
 category:       Web
 homepage:       https://github.com/simspace/servant-websockets#readme
@@ -23,20 +23,40 @@ source-repository head
   type: git
   location: https://github.com/simspace/servant-websockets
 
-test-suite servant-websockets-tests
-  type: exitcode-stdio-1.0
+library
+  exposed-modules:
+      Servant.Examples.WebSockets.MyExample
+  other-modules:
+      Paths_servant_websockets_examples
+  hs-source-dirs:
+      src
+  default-extensions: DataKinds DeriveGeneric DerivingStrategies LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables TypeApplications TypeOperators
+  ghc-options: -Wall -Werror -fwarn-tabs -O0 -eventlog
+  build-depends:
+      base
+    , http-client
+    , servant
+    , servant-client
+    , servant-client-core
+    , servant-server
+    , servant-websockets-client
+    , servant-websockets-core
+    , servant-websockets-server
+    , text
+    , warp
+    , websockets
+  default-language: Haskell2010
+
+executable servant-websocket-example
   main-is: Main.hs
   other-modules:
-      ServantWebSocketsSpec
-      Paths_servant_websockets_test
+      Paths_servant_websockets_examples
   hs-source-dirs:
-      test
+      app
   default-extensions: DataKinds DeriveGeneric DerivingStrategies LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables TypeApplications TypeOperators
-  ghc-options: -Wall -fwarn-tabs -O0 -threaded -rtsopts "-with-rtsopts=-N -T" -eventlog
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      async
-    , base
-    , hspec
+      base
     , http-client
     , servant
     , servant-client
