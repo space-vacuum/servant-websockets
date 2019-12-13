@@ -21,8 +21,8 @@ import qualified Network.WebSockets as WS
 
 instance HasServer WebSocketApp context where
   type ServerT WebSocketApp m = WebSocketServerT m
-  hoistServerWithContext _ = hoistWebSocketServerWithContext
-  route _ = routeWebSocket
+  hoistServerWithContext _api = hoistWebSocketServerWithContext
+  route _api = routeWebSocket
 
 type WebSocketServerT m = WS.PendingConnection -> m ()
 

@@ -22,32 +22,26 @@ instance
   ) => HasClient m WebSocketApp
   where
   type Client m WebSocketApp = WebSocketClient m
-  hoistClientMonad = hoistWebSocketClientMonad
-  clientWithRoute = webSocketClientWithRoute
+  hoistClientMonad m _api = hoistWebSocketClientMonad m
+  clientWithRoute m _api = webSocketClientWithRoute m
 
 type WebSocketClient m = WS.ClientApp () -> m ()
 
 hoistWebSocketClientMonad
-  :: ( Client mon api ~ WebSocketClient mon
-     , Client mon' api ~ WebSocketClient mon'
-     )
-  => Proxy (m :: * -> *)
-  -> Proxy api
+  :: Proxy (m :: * -> *)
   -> (forall x. mon x -> mon' x)
-  -> Client mon api
-  -> Client mon' api
-hoistWebSocketClientMonad _ _ = (.)
+  -> Client mon WebSocketApp
+  -> Client mon' WebSocketApp
+hoistWebSocketClientMonad _ = (.)
 
 webSocketClientWithRoute
   :: ( MonadIO m
      , MonadReader ClientEnv m
-     , Client m api ~ WebSocketClient m
      )
   => Proxy (m :: * -> *)
-  -> Proxy api
   -> Request
-  -> Client m api
-webSocketClientWithRoute _ _ req wsApp = do
+  -> Client m WebSocketApp
+webSocketClientWithRoute _ req wsApp = do
   let headers = toList $ requestHeaders req
   let path = LazyChar8.unpack $ toLazyByteString $ requestPath req
   clientEnv <- ask
