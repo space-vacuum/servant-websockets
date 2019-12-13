@@ -8,7 +8,7 @@ import Control.Monad
 import Data.Proxy
 import Servant.Server
 
-import Control.Exception (catch, throwIO)
+import Control.Monad.Catch (catch, throwM)
 import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Trans.Resource (runResourceT)
 import Network.Wai.Handler.WebSockets (websocketsOr)
@@ -63,10 +63,12 @@ routeWebSocket _ _ app =
         (respond . Route)
 
   runApp a c =
-    (void $ runHandler $ a c)
-    `catch` \case -- TODO: Likely not right, but fixes the tests.
-      WS.ConnectionClosed -> pure ()
-      e -> throwIO e
+    void $ runHandler $
+      a c
+      -- TODO: Likely not right, but fixes the tests.
+      `catch` (\case
+        WS.ConnectionClosed -> pure ()
+        e -> throwM e)
 
   backupApp respond _ _ =
     respond $ Fail ServerError

@@ -10,10 +10,7 @@ import Servant.Server
 import Servant.Server.Generic
 import Test.Hspec
 
-import Control.Concurrent
-  ( MVar, forkIO, modifyMVar_, newEmptyMVar, newMVar, putMVar, readMVar, takeMVar
-  , threadDelay
-  )
+import Control.Concurrent (MVar, forkIO, modifyMVar_, newEmptyMVar, newMVar, putMVar, readMVar, takeMVar, threadDelay)
 import Control.Concurrent.Async (race)
 import Control.Exception (finally, throwIO)
 import Control.Monad.IO.Class (liftIO)
@@ -30,54 +27,69 @@ import qualified Network.Wai.Handler.Warp as Warp
 import qualified Network.WebSockets as WS
 
 spec :: Spec
-spec = do
-  describe "MyAPI" $ do
-    it "should work" $ withTestClient $ \myClient -> do
-      jan <- newUser
-      void $ forkIO $ foo myClient "Jan" $ wsIO jan
-      receive jan `shouldReturn` "Welcome!"
-      send jan "Hi!"
-      receive jan `shouldReturn` "Jan: Hi!"
+spec =
+  around withTestClient $ do
+    describe "MyAPI" $ do
+      describe "/chat" $ do
+        it "should work" $ \myClient -> do
+          let withTimeout :: (HasCallStack) => IO a -> IO a
+              withTimeout x = do
+                -- 10 seconds
+                race (threadDelay 10000000) x >>= \case
+                  Left () -> error "Failed to complete within timeout"
+                  Right a -> pure a
 
-      tim <- newUser
-      void $ forkIO $ foo myClient "Tim" $ wsIO tim
+          -- (connection var, die var)
+          let newUser :: IO (MVar WS.Connection, MVar ())
+              newUser = (,) <$> newEmptyMVar @WS.Connection <*> newEmptyMVar @()
 
-      receive tim `shouldReturn` "Welcome! Users: Jan"
-      receive jan `shouldReturn` "Tim joined"
+          let send :: (HasCallStack) => (MVar WS.Connection, MVar ()) -> Text -> IO ()
+              send (var, _) msg =
+                withTimeout $ readMVar var >>= flip WS.sendTextData msg
 
-      send tim "Yo"
-      receive tim `shouldReturn` "Tim: Yo"
-      receive jan `shouldReturn` "Tim: Yo"
+          let receive :: (HasCallStack) => (MVar WS.Connection, MVar ()) -> IO Text
+              receive (var, _) = withTimeout $ readMVar var >>= WS.receiveData
 
-      kill tim
-      receive jan `shouldReturn` "Tim disconnected"
-      where
-      withTimeout :: (HasCallStack) => IO a -> IO a
-      withTimeout x = do
-        -- 10 seconds
-        race (threadDelay 10000000) x >>= \case
-          Left () -> error "Failed to complete within timeout"
-          Right a -> pure a
+          let kill :: (HasCallStack) => (MVar WS.Connection, MVar ()) -> IO ()
+              kill (_, die) = withTimeout $ void $ putMVar die ()
 
-      -- (connection var, die var)
-      newUser :: IO (MVar WS.Connection, MVar ())
-      newUser = (,) <$> newEmptyMVar @WS.Connection <*> newEmptyMVar @()
+          let wsIO :: (MVar WS.Connection, MVar ()) -> WS.Connection -> IO ()
+              wsIO (var, die) conn = do
+                putMVar var conn -- Set the connection var
+                takeMVar die -- Wait until the die var is set
+                void $ takeMVar var -- Unset the connection var
 
-      send :: (HasCallStack) => (MVar WS.Connection, MVar ()) -> Text -> IO ()
-      send (var, _) msg =
-        withTimeout $ readMVar var >>= flip WS.sendTextData msg
+          jan <- newUser
+          void $ forkIO $ chat myClient "Jan" $ wsIO jan
+          receive jan `shouldReturn` "Welcome!"
+          send jan "Hi!"
+          receive jan `shouldReturn` "Jan: Hi!"
 
-      receive :: (HasCallStack) => (MVar WS.Connection, MVar ()) -> IO Text
-      receive (var, _) = withTimeout $ readMVar var >>= WS.receiveData
+          tim <- newUser
+          void $ forkIO $ chat myClient "Tim" $ wsIO tim
 
-      kill :: (HasCallStack) => (MVar WS.Connection, MVar ()) -> IO ()
-      kill (_, die) = withTimeout $ void $ putMVar die ()
+          receive tim `shouldReturn` "Welcome! Users: Jan"
+          receive jan `shouldReturn` "Tim joined"
 
-      wsIO :: (MVar WS.Connection, MVar ()) -> WS.Connection -> IO ()
-      wsIO (var, die) conn = do
-        putMVar var conn -- Set the connection var
-        takeMVar die -- Wait until the die var is set
-        void $ takeMVar var -- Unset the connection var
+          send tim "Yo"
+          receive tim `shouldReturn` "Tim: Yo"
+          receive jan `shouldReturn` "Tim: Yo"
+
+          kill tim
+          receive jan `shouldReturn` "Tim disconnected"
+
+        -- TODO: This seems to be thrown by the server in the following test -
+        -- MalformedResponse (ResponseHead {responseCode = 403, responseMessage = "Forbidden", responseHeaders = []}) "Wrong response status or message."
+        --
+        -- it "should reject Bill" $ \myClient -> do
+        --   let go =
+        --         chat myClient "Bill" $ \_conn -> do
+        --           expectationFailure "This block should not execute"
+
+        --   try @ClientError go >>= \case
+        --     Right () -> expectationFailure "Expected Left, got Right "
+        --     Left (FailureResponse _ r) -> expectationFailure $ "********** FailureResponse " <> show r
+        --     Left e -> throwIO e
 
 type MyAPI = ToServantApi MyRoutes
 
@@ -85,22 +97,28 @@ myAPI :: Proxy MyAPI
 myAPI = genericApi (Proxy @MyRoutes)
 
 data MyRoutes routes = MyRoutes
-  { foo :: routes :-
+  { chat :: routes :-
       Header' '[Required, Strict] "Authorization" User
-        :> "foo"
+        :> "chat"
         :> WebSocketApp
   } deriving stock (Generic)
 
 type MyServer = MyRoutes AsServer
 
 mkMyServer :: MVar MyServerState -> MyServer
-mkMyServer state = MyRoutes { foo }
+mkMyServer state = MyRoutes { chat }
   where
-  foo :: User -> WS.PendingConnection -> Handler ()
-  foo user pendingConn = liftIO $ do
+  chat :: User -> WS.PendingConnection -> Handler ()
+  chat user pendingConn = liftIO $ do
     s <- readMVar state
     if user == "Bill" then
-      WS.rejectRequest pendingConn "No Bills allowed!"
+      WS.rejectRequestWith pendingConn
+        WS.RejectRequest
+          { WS.rejectCode = 403
+          , WS.rejectMessage = "Forbidden"
+          , WS.rejectHeaders = []
+          , WS.rejectBody = "No Bills allowed!"
+          }
     else if any ($ user) [Text.null, Text.any isPunctuation, Text.any isSpace] then
       WS.rejectRequest pendingConn "Name cannot contain punctuation or whitespace, and cannot be empty"
     else if any (user ==) (map fst s) then

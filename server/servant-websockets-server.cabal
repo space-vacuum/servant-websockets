@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 71095bccc57b1966208b925fad20a645ec336bd32ade19d98a5818ce58e19850
+-- hash: 44f26169571eb7606f951945bdf87f57a622109eba96bb44c9a01fc848bd6957
 
 name:           servant-websockets-server
 version:        0.0.0.1
@@ -34,6 +34,9 @@ library
   ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2 -eventlog
   build-depends:
       base
+    , bytestring
+    , exceptions
+    , mtl
     , resourcet
     , servant-server
     , servant-websockets-core
