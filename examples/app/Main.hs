@@ -6,7 +6,7 @@ import Data.Maybe
 import Control.Concurrent (forkIO)
 import Control.Monad.IO.Class (liftIO)
 import Data.String (fromString)
-import Servant.Examples.WebSockets.MyExample (chat, mkMyClient, newMyWaiApp)
+import Servant.WebSockets.Examples.MyExample (chat, mkMyClient, newMyWaiApp)
 import System.Environment (getArgs, lookupEnv)
 
 import qualified Data.Text as Text

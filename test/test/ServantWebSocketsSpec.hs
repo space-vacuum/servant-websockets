@@ -6,7 +6,7 @@ import Test.Hspec
 import Control.Concurrent (MVar, forkIO, newEmptyMVar, putMVar, readMVar, takeMVar, threadDelay)
 import Control.Concurrent.Async (race)
 import Data.Text (Text)
-import Servant.Examples.WebSockets.MyExample (MyRoutes(chat), MyClient, mkMyClient, newMyWaiApp)
+import Servant.WebSockets.Examples.MyExample (MyRoutes(chat), MyClient, mkMyClient, newMyWaiApp)
 import System.IO.Unsafe (unsafePerformIO)
 
 import qualified Network.HTTP.Client as HTTPClient

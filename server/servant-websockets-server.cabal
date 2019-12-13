@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 44f26169571eb7606f951945bdf87f57a622109eba96bb44c9a01fc848bd6957
+-- hash: 6b1fdd064afbb7c23c32b59a8396e0a92c15c85a2812f63cce4c495b100c1e92
 
 name:           servant-websockets-server
 version:        0.0.0.1
@@ -25,7 +25,7 @@ source-repository head
 
 library
   exposed-modules:
-      Servant.Server.WebSockets
+      Servant.WebSockets.Server
   other-modules:
       Paths_servant_websockets_server
   hs-source-dirs:

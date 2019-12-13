@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: dcd92292b5eee8e933b22fad5dc99310f9e6b2871883bc9735ec0efd9bf1f95e
+-- hash: 7b2eff89ff6f605594a327ea975123e47a4d6918cc1eb20dd15b15d87863154b
 
 name:           servant-websockets-examples
 version:        0.0.0.1
@@ -25,7 +25,7 @@ source-repository head
 
 library
   exposed-modules:
-      Servant.Examples.WebSockets.MyExample
+      Servant.WebSockets.Examples.MyExample
   other-modules:
       Paths_servant_websockets_examples
   hs-source-dirs:

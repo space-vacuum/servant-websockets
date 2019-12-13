@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-module Servant.Server.WebSockets
- ( module Servant.Server.WebSockets
- , module Servant.API.WebSockets
+module Servant.WebSockets.Server
+ ( module Servant.WebSockets.Server
+ , module Servant.WebSockets.API
  ) where
 
 import Control.Monad
@@ -12,7 +12,7 @@ import Control.Monad.Catch (catch, throwM)
 import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Trans.Resource (runResourceT)
 import Network.Wai.Handler.WebSockets (websocketsOr)
-import Servant.API.WebSockets (WebSocketApp)
+import Servant.WebSockets.API (WebSocketApp)
 import Servant.Server.Internal.Delayed (Delayed, runDelayed)
 import Servant.Server.Internal.RouteResult (RouteResult(Fail, FailFatal, Route))
 import Servant.Server.Internal.Router (Router, leafRouter)

@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
-module Servant.Client.WebSockets where
+module Servant.WebSockets.Client where
 
 import Data.Foldable
 import Data.Proxy
@@ -10,7 +10,7 @@ import Control.Monad.IO.Class (MonadIO(liftIO))
 import Control.Monad.Reader (MonadReader(ask))
 import Data.Binary.Builder (toLazyByteString)
 import Network.Socket (withSocketsDo)
-import Servant.API.WebSockets (WebSocketApp)
+import Servant.WebSockets.API (WebSocketApp)
 
 import qualified Data.ByteString.Lazy.Char8 as LazyChar8
 import qualified Network.WebSockets as WS

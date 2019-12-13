@@ -1,4 +1,4 @@
-module Servant.Examples.WebSockets.MyExample where
+module Servant.WebSockets.Examples.MyExample where
 
 import Control.Monad
 import Data.Proxy
@@ -11,16 +11,16 @@ import Data.Text (Text)
 import GHC.Generics (Generic)
 import Servant.API ((:>), Header', Required, Strict)
 import Servant.API.Generic ((:-), ToServantApi, genericApi)
-import Servant.API.WebSockets (WebSocketApp)
 import Servant.Client
   ( BaseUrl(BaseUrl, baseUrlHost, baseUrlPath, baseUrlPort, baseUrlScheme), Scheme(Http)
   , mkClientEnv, runClientM
   )
 import Servant.Client.Generic (AsClientT, genericClientHoist)
-import Servant.Client.WebSockets ()
 import Servant.Server (Application, Handler)
 import Servant.Server.Generic (AsServer, genericServe)
-import Servant.Server.WebSockets ()
+import Servant.WebSockets.API (WebSocketApp)
+import Servant.WebSockets.Client ()
+import Servant.WebSockets.Server ()
 
 import qualified Data.Text as Text
 import qualified Network.HTTP.Client as HTTPClient
