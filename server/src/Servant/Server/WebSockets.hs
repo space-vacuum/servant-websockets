@@ -21,31 +21,24 @@ import qualified Network.WebSockets as WS
 
 instance HasServer WebSocketApp context where
   type ServerT WebSocketApp m = WebSocketServerT m
-  hoistServerWithContext = hoistWebSocketServerWithContext @WebSocketApp @context
-  route = routeWebSocket @WebSocketApp @context
+  hoistServerWithContext _ = hoistWebSocketServerWithContext
+  route _ = routeWebSocket
 
 type WebSocketServerT m = WS.PendingConnection -> m ()
 
 hoistWebSocketServerWithContext
-  :: forall api (context :: [*]) m n.
-     ( ServerT api m ~ WebSocketServerT m
-     , ServerT api n ~ WebSocketServerT n
-     )
-  => Proxy api
-  -> Proxy context
+  :: Proxy (context :: [*])
   -> (forall x. m x -> n x)
-  -> ServerT api m
-  -> ServerT api n
-hoistWebSocketServerWithContext _ _ = (.)
+  -> ServerT WebSocketApp m
+  -> ServerT WebSocketApp n
+hoistWebSocketServerWithContext _ = (.)
 
 -- Adapted from https://github.com/moesenle/servant-websockets/blob/6ff9f0eeda0e0c228e82bae54f729115a33a3925/src/Servant/API/WebSocket.hs#L90-L104
 routeWebSocket
-  :: (ServerT api Handler ~ WebSocketServerT Handler)
-  => Proxy api
-  -> Context context
-  -> Delayed env (Server api)
+  :: Context context
+  -> Delayed env (Server WebSocketApp)
   -> Router env
-routeWebSocket _ _ app =
+routeWebSocket _ app =
   leafRouter $ \env request respond ->
     runResourceT $
       runDelayed app env request
