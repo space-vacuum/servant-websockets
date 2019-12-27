@@ -4,7 +4,7 @@ set -e
 
 cd "$(dirname $0)/.."
 
-subprojects=(core client server test)
+subprojects=(core client docs examples server test)
 
 packageYamlHeader() {
   local subproject=$1
@@ -17,8 +17,24 @@ license:             BSD3
 author:              "Cary Robbins"
 maintainer:          "carymrobbins@gmail.com"
 copyright:           "2019 SimSpace"
+category:            Web
+synopsis:            $(synopsis "$subproject")
+description:         Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
 # GENERATED HEADER END
 HERE
+}
+
+synopsis() {
+  local subproject=$1
+  case "$subproject" in
+    examples) echo "Example server, client, and docs for servant-websockets";;
+    test) echo "Test suite for servant-websockets";;
+    *)
+      local title
+      title=$(tr '[:lower:]' '[:upper:]' <<< "${subproject:0:1}")${subproject:1}
+      echo "$title library for using websockets with servant"
+      ;;
+  esac
 }
 
 for subproject in "${subprojects[@]}"; do

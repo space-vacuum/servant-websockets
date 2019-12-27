@@ -1,5 +1,5 @@
 # GENERATED HEADER START
-name:                servant-websockets-server
+name:                servant-websockets-docs
 version:             0.0.0.1
 github:              "simspace/servant-websockets"
 license:             BSD3
@@ -7,31 +7,30 @@ author:              "Cary Robbins"
 maintainer:          "carymrobbins@gmail.com"
 copyright:           "2019 SimSpace"
 category:            Web
-synopsis:            Server library for using websockets with servant
+synopsis:            Docs library for using websockets with servant
 description:         Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
 # GENERATED HEADER END
 
 default-extensions:
 - DataKinds
-- AllowAmbiguousTypes
+- FlexibleContexts
 - FlexibleInstances
-- LambdaCase
-- MultiParamTypeClasses
-- RankNTypes
+- KindSignatures
+- OverloadedStrings
+- PolyKinds
 - ScopedTypeVariables
 - TypeApplications
-- TypeFamilies
+- TypeOperators
 
 dependencies:
 - base
 - bytestring
-- exceptions
-- mtl
-- resourcet
-- servant-server
+- http-media
+- lens
+- servant
+- servant-docs
 - servant-websockets-core
-- wai-websockets
-- websockets
+- text
 
 library:
   source-dirs: src

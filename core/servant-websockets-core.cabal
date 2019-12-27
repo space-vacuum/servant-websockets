@@ -4,12 +4,12 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bec70fa260419df174f0c0f6d163d36e4119cccaa5582558803e506ecbfec581
+-- hash: 3544ea74934af59dda8b425ccfed8765c710062564bc0e86b51d79079e2edae6
 
 name:           servant-websockets-core
 version:        0.0.0.1
 synopsis:       Core library for using websockets with servant
-description:    Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+description:    Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
 category:       Web
 homepage:       https://github.com/simspace/servant-websockets#readme
 bug-reports:    https://github.com/simspace/servant-websockets/issues

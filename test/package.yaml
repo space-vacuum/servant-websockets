@@ -6,13 +6,10 @@ license:             BSD3
 author:              "Cary Robbins"
 maintainer:          "carymrobbins@gmail.com"
 copyright:           "2019 SimSpace"
-# GENERATED HEADER END
-
-synopsis:            Server library for using websockets with servant
-
 category:            Web
-
-description:         Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+synopsis:            Test suite for servant-websockets
+description:         Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
+# GENERATED HEADER END
 
 default-extensions:
 - DataKinds
@@ -33,6 +30,7 @@ dependencies:
 - servant
 - servant-client
 - servant-client-core
+- servant-docs
 - servant-server
 - servant-websockets-client
 - servant-websockets-core

@@ -4,12 +4,12 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f40f50927e2523566277eb0044c6f3e62f88f3c7f147a1c2eac705c3fa854e79
+-- hash: 66d540f481d9b30bf991be5707c52d7562b3c7b9ef627a87876cbb046e54f27e
 
 name:           servant-websockets-test
 version:        0.0.0.1
-synopsis:       Server library for using websockets with servant
-description:    Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+synopsis:       Test suite for servant-websockets
+description:    Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
 category:       Web
 homepage:       https://github.com/simspace/servant-websockets#readme
 bug-reports:    https://github.com/simspace/servant-websockets/issues
@@ -27,6 +27,7 @@ test-suite servant-websockets-tests
   type: exitcode-stdio-1.0
   main-is: Main.hs
   other-modules:
+      DeriveDocsSpec
       ServantWebSocketsSpec
       Paths_servant_websockets_test
   hs-source-dirs:
@@ -41,6 +42,7 @@ test-suite servant-websockets-tests
     , servant
     , servant-client
     , servant-client-core
+    , servant-docs
     , servant-server
     , servant-websockets-client
     , servant-websockets-core

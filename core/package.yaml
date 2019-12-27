@@ -6,13 +6,10 @@ license:             BSD3
 author:              "Cary Robbins"
 maintainer:          "carymrobbins@gmail.com"
 copyright:           "2019 SimSpace"
-# GENERATED HEADER END
-
-synopsis:            Core library for using websockets with servant
-
 category:            Web
-
-description:         Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+synopsis:            Core library for using websockets with servant
+description:         Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
+# GENERATED HEADER END
 
 dependencies:
 - base

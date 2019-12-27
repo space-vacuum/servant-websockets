@@ -4,5 +4,6 @@ packages:
 - ./core
 - ./server
 - ./client
+- ./docs
 - ./examples
 - ./test

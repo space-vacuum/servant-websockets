@@ -4,11 +4,11 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 90a69200bef6ed2e75c8a1b0af4acb87c83b692ec924ad3f290870679fde35c7
+-- hash: 5c2372e63027b000d5ffbe85d0339934fbddcb05edd9563be69351c820fde642
 
-name:           servant-websockets-client
+name:           servant-websockets-docs
 version:        0.0.0.1
-synopsis:       Client library for using websockets with servant
+synopsis:       Docs library for using websockets with servant
 description:    Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
 category:       Web
 homepage:       https://github.com/simspace/servant-websockets#readme
@@ -25,21 +25,20 @@ source-repository head
 
 library
   exposed-modules:
-      Servant.WebSockets.Client
+      Servant.WebSockets.Docs
   other-modules:
-      Paths_servant_websockets_client
+      Paths_servant_websockets_docs
   hs-source-dirs:
       src
-  default-extensions: FlexibleContexts FlexibleInstances MultiParamTypeClasses RankNTypes RankNTypes ScopedTypeVariables TypeApplications TypeFamilies UndecidableInstances
+  default-extensions: DataKinds FlexibleContexts FlexibleInstances KindSignatures OverloadedStrings PolyKinds ScopedTypeVariables TypeApplications TypeOperators
   ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2 -eventlog
   build-depends:
       base
-    , binary
     , bytestring
-    , mtl
-    , network
-    , servant-client
-    , servant-client-core
+    , http-media
+    , lens
+    , servant
+    , servant-docs
     , servant-websockets-core
-    , websockets
+    , text
   default-language: Haskell2010

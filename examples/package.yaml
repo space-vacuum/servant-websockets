@@ -6,34 +6,38 @@ license:             BSD3
 author:              "Cary Robbins"
 maintainer:          "carymrobbins@gmail.com"
 copyright:           "2019 SimSpace"
-# GENERATED HEADER END
-
-synopsis:            Example server and client for servant-websockets
-
 category:            Web
-
-description:         Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+synopsis:            Example server, client, and docs for servant-websockets
+description:         Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
+# GENERATED HEADER END
 
 default-extensions:
 - DataKinds
+- DeriveAnyClass
 - DeriveGeneric
 - DerivingStrategies
+- DerivingVia
+- FlexibleInstances
 - LambdaCase
 - NamedFieldPuns
 - OverloadedStrings
 - ScopedTypeVariables
+- StandaloneDeriving
 - TypeApplications
 - TypeOperators
 
 dependencies:
 - base
+- aeson
 - http-client
 - servant
 - servant-client
 - servant-client-core
+- servant-docs
 - servant-server
 - servant-websockets-client
 - servant-websockets-core
+- servant-websockets-docs
 - servant-websockets-server
 - text
 - warp

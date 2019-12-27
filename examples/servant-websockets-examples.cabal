@@ -4,12 +4,12 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7b2eff89ff6f605594a327ea975123e47a4d6918cc1eb20dd15b15d87863154b
+-- hash: 8d31792bf48130bbe1f33b489bdacc8934decc310e010f7d09ef3dee37a59d8f
 
 name:           servant-websockets-examples
 version:        0.0.0.1
-synopsis:       Example server and client for servant-websockets
-description:    Please see the README on GitHub at <https://github.com/estatico/servant-websockets#readme>
+synopsis:       Example server, client, and docs for servant-websockets
+description:    Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
 category:       Web
 homepage:       https://github.com/simspace/servant-websockets#readme
 bug-reports:    https://github.com/simspace/servant-websockets/issues
@@ -25,22 +25,26 @@ source-repository head
 
 library
   exposed-modules:
+      Servant.WebSockets.Examples.DeriveDocs
       Servant.WebSockets.Examples.MyExample
   other-modules:
       Paths_servant_websockets_examples
   hs-source-dirs:
       src
-  default-extensions: DataKinds DeriveGeneric DerivingStrategies LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables TypeApplications TypeOperators
+  default-extensions: DataKinds DeriveAnyClass DeriveGeneric DerivingStrategies DerivingVia FlexibleInstances LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables StandaloneDeriving TypeApplications TypeOperators
   ghc-options: -Wall -Werror -fwarn-tabs -O0 -eventlog
   build-depends:
-      base
+      aeson
+    , base
     , http-client
     , servant
     , servant-client
     , servant-client-core
+    , servant-docs
     , servant-server
     , servant-websockets-client
     , servant-websockets-core
+    , servant-websockets-docs
     , servant-websockets-server
     , text
     , warp
@@ -53,17 +57,20 @@ executable servant-websocket-example
       Paths_servant_websockets_examples
   hs-source-dirs:
       app
-  default-extensions: DataKinds DeriveGeneric DerivingStrategies LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables TypeApplications TypeOperators
+  default-extensions: DataKinds DeriveAnyClass DeriveGeneric DerivingStrategies DerivingVia FlexibleInstances LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables StandaloneDeriving TypeApplications TypeOperators
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base
+      aeson
+    , base
     , http-client
     , servant
     , servant-client
     , servant-client-core
+    , servant-docs
     , servant-server
     , servant-websockets-client
     , servant-websockets-core
+    , servant-websockets-docs
     , servant-websockets-examples
     , servant-websockets-server
     , text

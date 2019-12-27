@@ -1,7 +1,6 @@
 module Main where
 
 import Control.Monad
-import Data.Maybe
 
 import Control.Concurrent (forkIO)
 import Control.Monad.IO.Class (liftIO)
@@ -20,13 +19,12 @@ main :: IO ()
 main = do
   IO.hSetBuffering IO.stdout IO.LineBuffering
   port <- maybe 9160 read <$> lookupEnv "WS_PORT"
-  host <- fromMaybe "127.0.0.1" <$> lookupEnv "WS_HOST"
   getArgs >>= \case
     ["server"] -> Warp.run port =<< newMyWaiApp
-    ["client", user] -> clientApp host port user
+    ["client", user] -> clientApp port user
     args -> error $ "Invalid arguments" <> show args
   where
-  clientApp host port user = do
+  clientApp port user = do
     httpManager <- HTTPClient.newManager HTTPClient.defaultManagerSettings
     chat (mkMyClient httpManager port) (fromString user) $ \conn -> do
       putStrLn "Connected!"
