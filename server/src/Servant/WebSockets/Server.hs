@@ -4,18 +4,20 @@ module Servant.WebSockets.Server
  , module Servant.WebSockets.API
  ) where
 
-import Control.Monad
-import Data.Proxy
+import Control.Monad (void)
+import Data.Proxy (Proxy)
 import Servant.Server
+  ( ServerError(..), Context, HasServer, Server, ServerT, hoistServerWithContext, route, runHandler
+  )
 
 import Control.Monad.Catch (catch, throwM)
 import Control.Monad.IO.Class (liftIO)
 import Control.Monad.Trans.Resource (runResourceT)
 import Network.Wai.Handler.WebSockets (websocketsOr)
-import Servant.WebSockets.API (WebSocketApp)
 import Servant.Server.Internal.Delayed (Delayed, runDelayed)
 import Servant.Server.Internal.RouteResult (RouteResult(Fail, FailFatal, Route))
 import Servant.Server.Internal.Router (Router, leafRouter)
+import Servant.WebSockets.API (WebSocketApp)
 
 import qualified Network.WebSockets as WS
 
