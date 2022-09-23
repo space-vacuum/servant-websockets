@@ -1,0 +1,14 @@
+packages:
+    core
+    server
+    client
+    docs
+    examples
+    test
+
+source-repository-package
+    type: git
+    location: https://github.com/haskell-servant/servant.git
+    tag: 2323906080e50fc2774cd1b43bc59548a90152ed
+    subdir:
+        servant-client-core

@@ -14,6 +14,7 @@ import Servant.WebSockets.API (WebSocketApp)
 
 import qualified Data.ByteString.Lazy.Char8 as LazyChar8
 import qualified Network.WebSockets as WS
+import Data.Kind (Type)
 
 instance
   ( MonadReader ClientEnv m
@@ -28,7 +29,7 @@ instance
 type WebSocketClient m = WS.ClientApp () -> m ()
 
 hoistWebSocketClientMonad
-  :: Proxy (m :: * -> *)
+  :: Proxy (m :: Type -> Type)
   -> (forall x. mon x -> mon' x)
   -> Client mon WebSocketApp
   -> Client mon' WebSocketApp
@@ -38,7 +39,7 @@ webSocketClientWithRoute
   :: ( MonadIO m
      , MonadReader ClientEnv m
      )
-  => Proxy (m :: * -> *)
+  => Proxy (m :: Type -> Type)
   -> Request
   -> Client m WebSocketApp
 webSocketClientWithRoute _ req wsApp = do

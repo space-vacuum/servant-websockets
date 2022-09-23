@@ -20,6 +20,7 @@ import Servant.Server.Internal.Router (Router, leafRouter)
 import Servant.WebSockets.API (WebSocketApp)
 
 import qualified Network.WebSockets as WS
+import Data.Kind (Type)
 
 instance HasServer WebSocketApp context where
   type ServerT WebSocketApp m = WebSocketServerT m
@@ -29,7 +30,7 @@ instance HasServer WebSocketApp context where
 type WebSocketServerT m = WS.PendingConnection -> m ()
 
 hoistWebSocketServerWithContext
-  :: Proxy (context :: [*])
+  :: Proxy (context :: [Type])
   -> (forall x. m x -> n x)
   -> ServerT WebSocketApp m
   -> ServerT WebSocketApp n
