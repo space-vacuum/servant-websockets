@@ -1,22 +1,22 @@
-cabal-version: 1.12
+cabal-version: 2.2
 
 -- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 68aa050d081502bb1d5c6d6575b16b86c3cfbc59942bc6be76f5b508464e3369
+-- hash: 78d6dcf9a8ad67d4c46eaaaddbcc25701f52d098ccbccee29455258b9271686f
 
 name:           servant-websockets-examples
-version:        0.0.0.1
+version:        0.0.1
 synopsis:       Example server, client, and docs for servant-websockets
 description:    Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
 category:       Web
 homepage:       https://github.com/simspace/servant-websockets#readme
 bug-reports:    https://github.com/simspace/servant-websockets/issues
 author:         Cary Robbins
-maintainer:     carymrobbins@gmail.com
+maintainer:     SimSpace Engineering
 copyright:      2019 SimSpace
-license:        BSD3
+license:        BSD-3-Clause
 build-type:     Simple
 
 source-repository head
@@ -28,6 +28,8 @@ library
       Servant.WebSockets.Examples.DeriveDocs
       Servant.WebSockets.Examples.MyExample
   other-modules:
+      Paths_servant_websockets_examples
+  autogen-modules:
       Paths_servant_websockets_examples
   hs-source-dirs:
       src
@@ -69,6 +71,8 @@ library
 executable servant-websocket-example
   main-is: Main.hs
   other-modules:
+      Paths_servant_websockets_examples
+  autogen-modules:
       Paths_servant_websockets_examples
   hs-source-dirs:
       app

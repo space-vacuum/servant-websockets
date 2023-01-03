@@ -1,22 +1,22 @@
-cabal-version: 1.12
+cabal-version: 2.2
 
 -- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 90335b177172f85ce7cf5ffd715b3e601c6ea7d1d850cca967fed40a2e2afedd
+-- hash: 154a251461e91492d9e5118a264a32ef90b7436eef8d08b35c5526813629336d
 
 name:           servant-websockets-client
-version:        0.0.0.1
+version:        0.0.1
 synopsis:       Client library for using websockets with servant
 description:    Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
 category:       Web
 homepage:       https://github.com/simspace/servant-websockets#readme
 bug-reports:    https://github.com/simspace/servant-websockets/issues
 author:         Cary Robbins
-maintainer:     carymrobbins@gmail.com
+maintainer:     SimSpace Engineering
 copyright:      2019 SimSpace
-license:        BSD3
+license:        BSD-3-Clause
 build-type:     Simple
 
 source-repository head
@@ -27,6 +27,8 @@ library
   exposed-modules:
       Servant.WebSockets.Client
   other-modules:
+      Paths_servant_websockets_client
+  autogen-modules:
       Paths_servant_websockets_client
   hs-source-dirs:
       src

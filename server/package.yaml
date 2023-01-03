@@ -1,10 +1,10 @@
 # GENERATED HEADER START
 name:                servant-websockets-server
-version:             0.0.0.1
+version:             0.0.1
 github:              "simspace/servant-websockets"
-license:             BSD3
+license:             BSD-3-Clause
 author:              "Cary Robbins"
-maintainer:          "carymrobbins@gmail.com"
+maintainer:          "SimSpace Engineering"
 copyright:           "2019 SimSpace"
 category:            Web
 synopsis:            Server library for using websockets with servant

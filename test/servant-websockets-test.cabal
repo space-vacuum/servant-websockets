@@ -1,22 +1,22 @@
-cabal-version: 1.12
+cabal-version: 2.2
 
 -- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 52d027109c08ba2b8ee365ba8ce03d34ae6681250971f3d19a070b0c344cfc08
+-- hash: d13d8b01911e19b3ec10448560bb880367fc9ea1dd8a32c21df4e316e481adc1
 
 name:           servant-websockets-test
-version:        0.0.0.1
+version:        0.0.1
 synopsis:       Test suite for servant-websockets
 description:    Please see the README on GitHub at <https://github.com/simspace/servant-websockets#readme>
 category:       Web
 homepage:       https://github.com/simspace/servant-websockets#readme
 bug-reports:    https://github.com/simspace/servant-websockets/issues
 author:         Cary Robbins
-maintainer:     carymrobbins@gmail.com
+maintainer:     SimSpace Engineering
 copyright:      2019 SimSpace
-license:        BSD3
+license:        BSD-3-Clause
 build-type:     Simple
 
 source-repository head
@@ -29,6 +29,8 @@ test-suite servant-websockets-tests
   other-modules:
       DeriveDocsSpec
       ServantWebSocketsSpec
+      Paths_servant_websockets_test
+  autogen-modules:
       Paths_servant_websockets_test
   hs-source-dirs:
       test
