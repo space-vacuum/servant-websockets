@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 66d540f481d9b30bf991be5707c52d7562b3c7b9ef627a87876cbb046e54f27e
+-- hash: 52d027109c08ba2b8ee365ba8ce03d34ae6681250971f3d19a070b0c344cfc08
 
 name:           servant-websockets-test
 version:        0.0.0.1
@@ -32,8 +32,17 @@ test-suite servant-websockets-tests
       Paths_servant_websockets_test
   hs-source-dirs:
       test
-  default-extensions: DataKinds DeriveGeneric DerivingStrategies LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables TypeApplications TypeOperators
-  ghc-options: -Wall -fwarn-tabs -O0 -threaded -rtsopts "-with-rtsopts=-N -T" -eventlog
+  default-extensions:
+      DataKinds
+      DeriveGeneric
+      DerivingStrategies
+      LambdaCase
+      NamedFieldPuns
+      OverloadedStrings
+      ScopedTypeVariables
+      TypeApplications
+      TypeOperators
+  ghc-options: -Wall -fwarn-tabs -O0 -threaded -rtsopts "-with-rtsopts=-N -T"
   build-depends:
       async
     , base
@@ -52,3 +61,5 @@ test-suite servant-websockets-tests
     , warp
     , websockets
   default-language: Haskell2010
+  if impl(ghc < 9.4)
+    ghc-options: -eventlog

@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 8d31792bf48130bbe1f33b489bdacc8934decc310e010f7d09ef3dee37a59d8f
+-- hash: 68aa050d081502bb1d5c6d6575b16b86c3cfbc59942bc6be76f5b508464e3369
 
 name:           servant-websockets-examples
 version:        0.0.0.1
@@ -31,8 +31,21 @@ library
       Paths_servant_websockets_examples
   hs-source-dirs:
       src
-  default-extensions: DataKinds DeriveAnyClass DeriveGeneric DerivingStrategies DerivingVia FlexibleInstances LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables StandaloneDeriving TypeApplications TypeOperators
-  ghc-options: -Wall -Werror -fwarn-tabs -O0 -eventlog
+  default-extensions:
+      DataKinds
+      DeriveAnyClass
+      DeriveGeneric
+      DerivingStrategies
+      DerivingVia
+      FlexibleInstances
+      LambdaCase
+      NamedFieldPuns
+      OverloadedStrings
+      ScopedTypeVariables
+      StandaloneDeriving
+      TypeApplications
+      TypeOperators
+  ghc-options: -Wall -Werror -fwarn-tabs -O0
   build-depends:
       aeson
     , base
@@ -50,6 +63,8 @@ library
     , warp
     , websockets
   default-language: Haskell2010
+  if impl(ghc < 9.4)
+    ghc-options: -eventlog
 
 executable servant-websocket-example
   main-is: Main.hs
@@ -57,7 +72,20 @@ executable servant-websocket-example
       Paths_servant_websockets_examples
   hs-source-dirs:
       app
-  default-extensions: DataKinds DeriveAnyClass DeriveGeneric DerivingStrategies DerivingVia FlexibleInstances LambdaCase NamedFieldPuns OverloadedStrings ScopedTypeVariables StandaloneDeriving TypeApplications TypeOperators
+  default-extensions:
+      DataKinds
+      DeriveAnyClass
+      DeriveGeneric
+      DerivingStrategies
+      DerivingVia
+      FlexibleInstances
+      LambdaCase
+      NamedFieldPuns
+      OverloadedStrings
+      ScopedTypeVariables
+      StandaloneDeriving
+      TypeApplications
+      TypeOperators
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson

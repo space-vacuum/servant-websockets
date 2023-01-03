@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 28f28b4323eaa1906d03246d4b8ea8efb2b5a85f67743a645e50392b1622b190
+-- hash: 587e0c3c961f6848d1e7e63d18c1ed0c1c3756171b463770e36dc54d1ce8daf7
 
 name:           servant-websockets-server
 version:        0.0.0.1
@@ -30,8 +30,17 @@ library
       Paths_servant_websockets_server
   hs-source-dirs:
       src
-  default-extensions: DataKinds AllowAmbiguousTypes FlexibleInstances LambdaCase MultiParamTypeClasses RankNTypes ScopedTypeVariables TypeApplications TypeFamilies
-  ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2 -eventlog
+  default-extensions:
+      DataKinds
+      AllowAmbiguousTypes
+      FlexibleInstances
+      LambdaCase
+      MultiParamTypeClasses
+      RankNTypes
+      ScopedTypeVariables
+      TypeApplications
+      TypeFamilies
+  ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2
   build-depends:
       base
     , bytestring
@@ -43,3 +52,5 @@ library
     , wai-websockets
     , websockets
   default-language: Haskell2010
+  if impl(ghc < 9.4)
+    ghc-options: -eventlog

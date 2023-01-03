@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 5c2372e63027b000d5ffbe85d0339934fbddcb05edd9563be69351c820fde642
+-- hash: 84ef1dd2a6f50bf24a2c365203d7c1c4ed761460f9b0d7ab99e2ae25013bf22e
 
 name:           servant-websockets-docs
 version:        0.0.0.1
@@ -30,8 +30,17 @@ library
       Paths_servant_websockets_docs
   hs-source-dirs:
       src
-  default-extensions: DataKinds FlexibleContexts FlexibleInstances KindSignatures OverloadedStrings PolyKinds ScopedTypeVariables TypeApplications TypeOperators
-  ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2 -eventlog
+  default-extensions:
+      DataKinds
+      FlexibleContexts
+      FlexibleInstances
+      KindSignatures
+      OverloadedStrings
+      PolyKinds
+      ScopedTypeVariables
+      TypeApplications
+      TypeOperators
+  ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2
   build-depends:
       base
     , bytestring
@@ -42,3 +51,5 @@ library
     , servant-websockets-core
     , text
   default-language: Haskell2010
+  if impl(ghc < 9.4)
+    ghc-options: -eventlog

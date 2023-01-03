@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.31.2.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3544ea74934af59dda8b425ccfed8765c710062564bc0e86b51d79079e2edae6
+-- hash: 25ed3e5a6ee5c25a9320118bfc933b14c3fb289d304ebffe89c67a1d540d75e3
 
 name:           servant-websockets-core
 version:        0.0.0.1
@@ -30,7 +30,9 @@ library
       Paths_servant_websockets_core
   hs-source-dirs:
       src
-  ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2 -eventlog
+  ghc-options: -Wall -Werror -fwarn-tabs -Wincomplete-uni-patterns -O2
   build-depends:
       base
   default-language: Haskell2010
+  if impl(ghc < 9.4)
+    ghc-options: -eventlog

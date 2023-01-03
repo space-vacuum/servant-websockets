@@ -5,3 +5,12 @@ packages:
     docs
     examples
     test
+
+-- NOTE: Waiting on a hackage release.
+-- SEE: https://github.com/haskell-servant/servant/issues/1636
+source-repository-package
+    type: git
+    location: https://github.com/haskell-servant/servant.git
+    tag: 3f6886ad2df62d05d11409d076baad947621fab4
+    subdir:
+        servant-docs

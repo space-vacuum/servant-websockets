@@ -49,7 +49,10 @@ library:
   - -Werror
   - -fwarn-tabs
   - -O0
-  - -eventlog
+  when:
+    - condition: impl(ghc < 9.4)
+      ghc-options:
+      - -eventlog
   source-dirs:
   - src
 

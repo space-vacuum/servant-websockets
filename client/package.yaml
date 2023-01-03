@@ -41,4 +41,8 @@ library:
   - -fwarn-tabs
   - -Wincomplete-uni-patterns
   - -O2
-  - -eventlog
+
+when:
+  - condition: impl(ghc < 9.4)
+    ghc-options:
+    - -eventlog

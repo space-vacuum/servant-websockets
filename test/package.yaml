@@ -51,6 +51,9 @@ tests:
     - -threaded
     - -rtsopts
     - '"-with-rtsopts=-N -T"'
-    - -eventlog
+    when:
+      - condition: impl(ghc < 9.4)
+        ghc-options:
+        - -eventlog
     source-dirs:
     - test
